@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ... Your existing styles ... */
+    
+        .button-container {
+            display: flex; /* Use flexbox to arrange items in a row */
+            justify-content: space-around; /* Distribute space evenly between items */
+            width: 100%; /* Make sure the container spans the full width */
+            margin: 20px;
+
+        }
+    
+        .kutucuk1 {
+            width: 400px;
+            height: 1000px;
+            border: 2px solid black;
+            margin: 30px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .kutucuk2 {
+            width: 400px;
+            height: 1000px;
+            
+            border: 2px solid black;
+            margin: 30px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+            .kutucuk3 {
+            width: 400px;
+            height: 1000px;
+            
+            border: 2px solid black;
+            margin: 30px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+    </style>
+    
+</head>
+<body>
+    <img src="C:\Users\habay\Desktop\new 3\voicesum.png" alt="" width="300" height="200" />
+    <h1 style="margin: 5%; display: block;">Konuşmayı Metne Çevirmek İçin Aşağıdaki Butona Tıkla</h1>
+    
+    <form action="/translate" method="post">
+        <div class="button-container">
+            <button style="margin: auto; display: block; font-size: 40px;" type="submit" > <i class="fas fa-microphone"></i></button>
+            <button id="stopButton" style="margin: auto; display: block; font-size: 30px;" type="button"
+                onclick="stopRecording()"> Durdur</button>
+        </div>
+        
+        <div class="kutucuk1" style="text-align: center;" >Orijinal Metin  <p>{{ original_text }}</p></div>
+        <div class="kutucuk2"style="text-align: center;"> Çevrilmiş Metin <p>{{ translated_text }}</p></div>
+        <div class="kutucuk3" style="text-align: center;">Özetlenmiş Metin<p>{{ summary_turkish}}</p></div>
+    </form>
+
+    <script>
+        var recognition;
+        var isRecording = false;
+
+        
+
+        function stopRecording() {
+            if (isRecording) {
+                recognition.stop();
+                isRecording = false;
+                translateText();
+            }
+        }
+
+        function translateText() {
+            var originalText = document.getElementById('originalText').innerText;
+            var formData = new FormData();
+            formData.append('text', originalText);
+
+            fetch('/translate', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('translatedText').innerText = data.translated_text;
+                    document.getElementById('summary').innerText = data.summary;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>

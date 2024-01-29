@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech-to-Text and Translation</title>
+</head>
+<body>
+    <h1>Speech-to-Text and Translation</h1>
+    <img src="C:\Users\habay\Desktop\new 3\voicesum.png" alt="resim" width="300" height="200" />
+
+    <form action="/translate" method="post">
+        <button type="submit">Translate Speech</button>
+    </form>
+
+    {% if original_text %}
+        <h2>Original Text:</h2>
+        <p>{{ original_text }}</p>
+    {% endif %}
+
+    {% if translated_text %}
+        <h2>Translated Text:</h2>
+        <p>{{ translated_text }}</p>
+    {% endif %}
+
+    {% if summary %}
+        <h2>Summary:</h2>
+        <p>{{ summary }}</p>
+    {% endif %}
+
+</body>
+</html>
